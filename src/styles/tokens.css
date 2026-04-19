@@ -1,0 +1,64 @@
+@layer tokens {
+  :root {
+    /* palette — invariant across modes and motifs */
+    --palette-rose: #C8A4A9;
+    --palette-plum: #5B3A4A;
+    --palette-sage: #9FAE92;
+    --palette-cream: #F7F2EC;
+    --palette-ink: #1C1618;
+    --palette-taupe: #8A7B7E;
+  }
+
+  /* LIGHT MODE (default) */
+  :root,
+  [data-theme-mode="light"] {
+    --bg: var(--palette-cream);
+    --fg: var(--palette-ink);
+    --fg-muted: var(--palette-taupe);
+    --border: rgba(28, 22, 24, 0.10);
+    --primary: var(--palette-rose);
+    --primary-fg: var(--palette-cream);
+    --primary-deep: var(--palette-plum);
+    --accent-natural: var(--palette-sage);
+    --focus-ring: var(--palette-plum);
+  }
+
+  /* DARK MODE */
+  [data-theme-mode="dark"] {
+    --bg: var(--palette-ink);
+    --fg: var(--palette-cream);
+    --fg-muted: var(--palette-taupe);
+    --border: rgba(247, 242, 236, 0.12);
+    --primary: var(--palette-rose);
+    --primary-fg: var(--palette-ink);
+    --primary-deep: var(--palette-rose);
+    --accent-natural: var(--palette-sage);
+    --focus-ring: var(--palette-rose);
+  }
+
+  /* MOTIF — CONSTELLATION (default) */
+  :root,
+  [data-theme-motif="constellation"] {
+    --ornament-primary: var(--palette-rose);
+    --ornament-secondary: var(--palette-plum);
+    --ornament-tertiary: var(--palette-sage);
+  }
+
+  /* MOTIF — FLORAL */
+  [data-theme-motif="floral"] {
+    --ornament-primary: var(--palette-sage);
+    --ornament-secondary: var(--palette-rose);
+    --ornament-tertiary: var(--palette-plum);
+  }
+
+  /* Dark-mode motif adjustments (ornament needs more luminance on dark) */
+  [data-theme-mode="dark"][data-theme-motif="constellation"] {
+    --ornament-primary: var(--palette-rose);
+    --ornament-secondary: var(--palette-cream);
+  }
+
+  [data-theme-mode="dark"][data-theme-motif="floral"] {
+    --ornament-primary: var(--palette-sage);
+    --ornament-secondary: var(--palette-rose);
+  }
+}

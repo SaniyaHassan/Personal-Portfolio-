@@ -1,0 +1,196 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "../styles/tokens.css";
+
+/* Redirect Tailwind's `dark:` variant to our data-attribute. */
+@custom-variant dark (&:is([data-theme-mode="dark"] *));
+
+@theme inline {
+  /* Site tokens */
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-primary: var(--primary);
+  --color-primary-fg: var(--primary-fg);
+  --color-primary-deep: var(--primary-deep);
+  --color-accent-natural: var(--accent-natural);
+  --color-focus-ring: var(--focus-ring);
+  --color-ornament-primary: var(--ornament-primary);
+  --color-ornament-secondary: var(--ornament-secondary);
+  --color-ornament-tertiary: var(--ornament-tertiary);
+
+  /* shadcn compat — map shadcn Tailwind utilities onto our palette */
+  --color-background: var(--bg);
+  --color-foreground: var(--fg);
+  --color-card: var(--bg);
+  --color-card-foreground: var(--fg);
+  --color-popover: var(--bg);
+  --color-popover-foreground: var(--fg);
+  --color-primary-foreground: var(--primary-fg);
+  --color-secondary: var(--border);
+  --color-secondary-foreground: var(--fg);
+  --color-muted: var(--border);
+  --color-muted-foreground: var(--fg-muted);
+  --color-accent: var(--accent-natural);
+  --color-accent-foreground: var(--fg);
+  --color-border: var(--border);
+  --color-input: var(--border);
+  --color-ring: var(--focus-ring);
+  --color-destructive: oklch(0.577 0.245 27.325);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+  --font-sans: var(--font-inter);
+}
+
+:root {
+  --radius: 0.625rem;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  transition:
+    background-color 250ms ease,
+    color 250ms ease;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* User-level override — ⌘K → "Reduce Motion" sets data-force-reduce on <html>. */
+[data-force-reduce="true"] *,
+[data-force-reduce="true"] *::before,
+[data-force-reduce="true"] *::after {
+  animation-duration: 0.01ms !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* Motif visibility — only the motif matching the current data-theme-motif
+   is rendered, so hero / footer / dividers never paint both ornament layers. */
+[data-theme-motif="constellation"] .motif-floral,
+[data-theme-motif="floral"] .motif-constellation {
+  display: none;
+}
+
+/* Constellation twinkle. Dark mode gives the brighter breathing pulse for
+   drama; light mode gets a subtler flicker so the background doesn't fight
+   body copy. Reduced-motion users get a static field. */
+@keyframes motif-twinkle {
+  0%, 100% { opacity: 0.65; }
+  50% { opacity: 1; }
+}
+@keyframes motif-twinkle-halo {
+  0%, 100% { opacity: 0; transform: scale(0.9); }
+  50% { opacity: 0.8; transform: scale(1.15); }
+}
+
+.motif-constellation .twinkle {
+  animation: motif-twinkle 3.2s ease-in-out infinite;
+}
+.motif-constellation .twinkle-halo {
+  animation: motif-twinkle-halo 3.2s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+[data-theme-mode="dark"] .motif-constellation .twinkle {
+  animation-duration: 2.4s;
+  animation-timing-function: ease-in-out;
+}
+[data-theme-mode="dark"] .motif-constellation .twinkle-halo {
+  animation-duration: 2.4s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motif-constellation .twinkle,
+  .motif-constellation .twinkle-halo {
+    animation: none;
+  }
+}
+[data-force-reduce="true"] .motif-constellation .twinkle,
+[data-force-reduce="true"] .motif-constellation .twinkle-halo {
+  animation: none;
+}
+
+/* Skills variants follow the same pattern so the motif toggle swaps the
+   Skills visualization from constellation star-map to floral garden. */
+[data-theme-motif="constellation"] .skills-variant-floral,
+[data-theme-motif="floral"] .skills-variant-constellation {
+  display: none;
+}
+
+/* Print styles — optimized for the /cv route but safe globally. */
+@media print {
+  :root,
+  [data-theme-mode="dark"] {
+    --bg: #ffffff;
+    --fg: #000000;
+    --fg-muted: #333333;
+    --border: rgba(0, 0, 0, 0.2);
+    --primary: #000000;
+    --primary-deep: #000000;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  /* Hide the top action bar (Back + Download PDF) on /cv. */
+  [data-cv-actions] {
+    display: none !important;
+  }
+
+  /* Hide the site header, footer, and skip-link on any printed page. */
+  body > header,
+  body > footer,
+  a[href="#main"] {
+    display: none !important;
+  }
+
+  [data-cv-root] {
+    font-size: 10.5pt;
+    line-height: 1.45;
+  }
+
+  [data-cv-root] section {
+    break-inside: avoid;
+  }
+
+  [data-cv-root] h1,
+  [data-cv-root] h2,
+  [data-cv-root] h3 {
+    break-after: avoid;
+  }
+
+  [data-cv-root] a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+}
