@@ -71,10 +71,8 @@ export const honors: readonly Honor[] = [
     title: "Publications Executive",
     issuer: "IEEE NUST Student Chapter",
     year: "Current",
-    // TODO(saniya): real accomplishments pending — replace placeholders below.
     bullets: [
-      "Coordinated publication pipeline for chapter newsletter",
-      "Edited and published articles across the chapter's channels",
+      "Partcipated in online IEEE Summits.",
     ],
   },
 ];
