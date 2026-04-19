@@ -63,16 +63,14 @@ export const honors: readonly Honor[] = [
     title: "AI for Everyone",
     issuer: "Coursera",
   },
-
-  // ─── Leadership ────────────────────────────────────────────────
   {
-    id: "ieee-nust-publications-executive",
-    kind: "leadership",
-    title: "Publications Executive",
-    issuer: "IEEE NUST Student Chapter",
-    year: "Current",
-    bullets: [
-      "Partcipated in online IEEE Summits.",
-    ],
-  },
+  id: "ieee-nust-publications-executive",
+  kind: "leadership",
+  title: "Publications Executive",
+  issuer: "IEEE NUST Student Chapter",
+  year: "Current",
+  bullets: [
+    "Participated in online IEEE Summits.",
+  ],
+},
 ];
