@@ -32,9 +32,6 @@ export function HonorCard({ honor }: HonorCardProps) {
               <li key={b}>{b}</li>
             ))}
           </ul>
-          <p className="mt-2 text-xs text-accent-natural font-mono">
-            (placeholder — update with real accomplishments)
-          </p>
         </>
       ) : null}
     </article>
